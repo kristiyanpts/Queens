@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="queens.js" type="module"></script>
+    <title>Queens</title>
+  </head>
+  <body>
+    <div class="start-menu">
+      <form action="" class="game-settings">
+        <h1>Game Settings</h1>
+        <label for="player-one">Player One Username: </label>
+        <input type="text" name="player-one" placeholder="Player One Name..." />
+        <label for="player-two">Player One Username: </label>
+        <input type="text" name="player-two" placeholder="Player Two Name..." />
+        <label for="option-1">Select Size:</label>
+        <div class="wrapper">
+          <input type="radio" name="select" id="option-1" checked />
+          <input type="radio" name="select" id="option-2" />
+          <input type="radio" name="select" id="option-3" />
+          <input type="radio" name="select" id="option-4" />
+          <label for="option-1" class="option option-1">
+            <div class="dot"></div>
+            <span>3x3</span>
+          </label>
+          <label for="option-2" class="option option-2">
+            <div class="dot"></div>
+            <span>6x6</span>
+          </label>
+          <label for="option-3" class="option option-3">
+            <div class="dot"></div>
+            <span>9x9</span>
+          </label>
+          <label for="option-4" class="option option-4">
+            <div class="dot"></div>
+            <span>Custom</span>
+          </label>
+        </div>
+        <div class="game-size" id="game-size">
+          <input type="number" name="size-x" placeholder="Width (Ex. '5')" />
+          <input type="number" name="size-y" placeholder="Height (Ex. '7')" />
+        </div>
+        <button type="submit" class="button-play">PLAY</button>
+      </form>
+    </div>
+    <div class="game-container"></div>
+  </body>
+</html>
