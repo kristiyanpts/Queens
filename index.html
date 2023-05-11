@@ -19,10 +19,30 @@
     <div class="start-menu">
       <form action="" class="game-settings">
         <h1>Game Settings</h1>
+        <label for="option-3">Select Game Mode:</label>
+        <div class="wrapper">
+          <input type="radio" name="select2" id="option-5" checked />
+          <input type="radio" name="select2" id="option-6" />
+          <label for="option-5" class="option option-5">
+            <div class="dot"></div>
+            <span>1 vs 1</span>
+          </label>
+          <label for="option-6" class="option option-6">
+            <div class="dot"></div>
+            <span>Against Bot</span>
+          </label>
+        </div>
         <label for="player-one">Player One Username: </label>
         <input type="text" name="player-one" placeholder="Player One Name..." />
-        <label for="player-two">Player One Username: </label>
-        <input type="text" name="player-two" placeholder="Player Two Name..." />
+        <label for="player-two" id="player-two-label"
+          >Player Two Username:
+        </label>
+        <input
+          type="text"
+          name="player-two"
+          placeholder="Player Two Name..."
+          id="player-two-show"
+        />
         <label for="option-1">Select Size:</label>
         <div class="wrapper">
           <input type="radio" name="select" id="option-1" checked />
@@ -31,15 +51,15 @@
           <input type="radio" name="select" id="option-4" />
           <label for="option-1" class="option option-1">
             <div class="dot"></div>
-            <span>3x3</span>
+            <span>6x6</span>
           </label>
           <label for="option-2" class="option option-2">
             <div class="dot"></div>
-            <span>6x6</span>
+            <span>9x9</span>
           </label>
           <label for="option-3" class="option option-3">
             <div class="dot"></div>
-            <span>9x9</span>
+            <span>12x12</span>
           </label>
           <label for="option-4" class="option option-4">
             <div class="dot"></div>
@@ -86,6 +106,19 @@
       </div>
       <div class="stat">
         <button>Reset Stats</button>
+      </div>
+    </div>
+    <div class="end-screen">
+      <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+      </div>
+      <div class="winner-container">
+        <p>The Winner is <span id="winner">Someone</span>!</p>
+        <div class="end-game-options">
+          <button id="rematch">Rematch</button>
+          <button id="menu">Menu</button>
+        </div>
       </div>
     </div>
   </body>

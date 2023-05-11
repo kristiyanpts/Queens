@@ -19,23 +19,31 @@ function AddSquares() {
       container.appendChild(child);
     }
   }
-  squares = Array.from(document.getElementsByClassName("squares"));
-  container.style.width = "600px";
-  containerParameters = container.getBoundingClientRect();
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].style.width =
-      (containerParameters.width / width).toString() + "px";
+  if (width >= height) {
+    squares = Array.from(document.getElementsByClassName("squares"));
+    container.style.width = "600px";
+    containerParameters = container.getBoundingClientRect();
+
+    for (let i = 0; i < squares.length; i++) {
+      let newSize = containerParameters.width / width;
+      squares[i].style.width = newSize + "px";
+      squares[i].style["font-size"] = newSize / 2 + "px";
+    }
+  } else {
+    squares = Array.from(document.getElementsByClassName("squares"));
+    container.style.height = "600px";
+    containerParameters = container.getBoundingClientRect();
+
+    for (let i = 0; i < squares.length; i++) {
+      let newSize = containerParameters.height / height;
+      squares[i].style.height = newSize + "px";
+      squares[i].style["font-size"] = newSize / 2 + "px";
+    }
   }
+
   container.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
-  //   } else {
-  //     container.style.height = "600px";
-  //     containerParameters = container.getBoundingClientRect();
-  //     for (let i = 0; i < squares.length; i++) {
-  //       squares[i].style.height =
-  //         (containerParameters.height / height).toString() + "px";
-  //     }
-  //     container.style.gridTemplateRows = `repeat(${height}, 1fr)`;
-  //   }
+  container.style.gridTemplateRows = `repeat(${height}, 1fr)`;
+
   for (let i = 0; i < squares.length; i++) {
     squares[i].addEventListener("click", Move);
   }
@@ -122,8 +130,8 @@ function checkMoves() {
     let winner =
       currentTurn == playerOneUsername ? playerTwoUsername : playerOneUsername;
     winner == playerOneUsername ? playerOneWon++ : playerTwoWon++;
-    alert(winner + " won!");
-    resetGame();
+    document.querySelector("#winner").textContent = winner;
+    document.querySelector(".end-screen").style.display = "flex";
   }
 }
 
@@ -137,15 +145,26 @@ function RadioCheck() {
   } else {
     gameSize.style.display = "none";
   }
+
+  let radioBot = document.getElementById("option-6");
+  let playerTwoField = document.getElementById("player-two-show");
+  let playerTwoLabel = document.getElementById("player-two-label");
+  if (radioBot.checked) {
+    playerTwoField.style.display = "none";
+    playerTwoLabel.style.display = "none";
+  } else {
+    playerTwoField.style.display = "block";
+    playerTwoLabel.style.display = "block";
+  }
 }
 
 let gameForm = document.querySelector(".game-settings");
 gameForm.addEventListener("submit", startGame);
 
 let sizeOptions = {
-  "option-1": [3, 3],
-  "option-2": [6, 6],
-  "option-3": [9, 9],
+  "option-1": [6, 6],
+  "option-2": [9, 9],
+  "option-3": [12, 12],
 };
 
 function startGame(e) {
@@ -157,8 +176,10 @@ function startGame(e) {
     ["size-x"]: sizeX,
     ["size-y"]: sizeY,
   } = Object.fromEntries(formData.entries());
-  let size = document.querySelector("input[type=radio]:checked");
+  let size = document.querySelector("input[name=select]:checked");
+  let gameType = document.querySelector("input[name=select2]:checked");
   if (size.id != "option-4") {
+    console.log(size.id);
     [sizeX, sizeY] = sizeOptions[size.id];
   } else {
     if (sizeX == "" || sizeY == "")
@@ -202,4 +223,13 @@ function resetGame() {
   document.querySelector(".game-container").innerHTML = "";
   document.querySelector(".game-container").style.display = "none";
   document.querySelector(".game-stats").style.display = "none";
+  document.querySelector(".end-screen").style.display = "none";
 }
+
+document.getElementById("rematch").addEventListener("click", () => {
+  document.querySelector(".game-container").innerHTML = "";
+  document.querySelector(".end-screen").style.display = "none";
+  AddSquares();
+});
+
+document.getElementById("menu").addEventListener("click", resetGame);
