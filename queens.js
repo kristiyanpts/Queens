@@ -49,9 +49,12 @@ function AddSquares() {
   }
 }
 function Move(e) {
+  console.log(e.target.style.backgroundColor);
+  console.log(e.target);
   if (
     e.target.style.backgroundColor === "rgb(161, 128, 224)" ||
-    e.target.style.backgroundColor === "rgb(124, 62, 247)"
+    e.target.style.backgroundColor === "rgb(124, 62, 247)" ||
+    e.target.tagName == "I"
   )
     return;
   e.target.style.backgroundColor = "rgb(124, 62, 247)";
