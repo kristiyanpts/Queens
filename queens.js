@@ -12,12 +12,15 @@ let currentTime = 0;
 
 function AddSquares() {
   for (let i = 1; i <= height; i++) {
+    let containerRow = []
     for (let j = 1; j <= width; j++) {
       let child = document.createElement("div");
       child.setAttribute("class", "squares");
-      child.setAttribute("id", i.toString() + " " + j.toString());
-      container.appendChild(child);
+      // child.setAttribute("id", i.toString() + " " + j.toString());
+      // container.appendChild(child);
+      containerRow.appendChild(child);
     }
+    container.appendChild(containerRow);
   }
   if (width >= height) {
     squares = Array.from(document.getElementsByClassName("squares"));
@@ -44,50 +47,64 @@ function AddSquares() {
   container.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${height}, 1fr)`;
 
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].addEventListener("click", Move);
+  // for (let i = 0; i < squares.length; i++) {
+  //   squares[i].addEventListener("click", Move);
+  // }
+  for (let i = 0; i < container.length; i++) {
+    for (let j = 0; j < container[i].length; j++) {
+      container[i][j].addEventListener("click", Move(i, j));
+    }
+    
   }
 }
-function Move(e) {
-  console.log(e.target.style.backgroundColor);
-  console.log(e.target);
+function Move(row,col) {
+  console.log(container[row][col].style.backgroundColor);
+  console.log(container[row][col]);
   if (
-    e.target.style.backgroundColor === "rgb(161, 128, 224)" ||
-    e.target.style.backgroundColor === "rgb(124, 62, 247)" ||
-    e.target.tagName == "I"
+    container[row][col].style.backgroundColor === "rgb(161, 128, 224)" ||
+    container[row][col].style.backgroundColor === "rgb(124, 62, 247)" ||
+    container[row][col].tagName == "I"
   )
     return;
-  e.target.style.backgroundColor = "rgb(124, 62, 247)";
-  e.target.innerHTML = "<i class='fa-solid fa-chess-queen'></i>";
-  let id = e.target.id;
-  let moveRow = Number(id.split(" ")[0]);
-  let moveCol = Number(id.split(" ")[1]);
+  container[row][col].style.backgroundColor = "rgb(124, 62, 247)";
+  container[row][col].innerHTML = "<i class='fa-solid fa-chess-queen'></i>";
+  // let id = container[row][col].id;
+  // let id = container.indexOf(container[row][col])
+  // let moveRow = Number(id.split(" ")[0]);
+  // let moveCol = Number(id.split(" ")[1]);
   for (let i = 1; i <= height; i++) {
     // Horizontaly
-    let square = document.getElementById(i.toString() + " " + id.split(" ")[1]);
+    // let square = document.getElementById(i.toString() + " " + id.split(" ")[1]);
+    let square = container[i][col];
     if (square.style.backgroundColor === "") {
       square.style.backgroundColor = "rgb(161, 128, 224)";
     }
   }
   for (let i = 1; i <= width; i++) {
     // Verticaly
-    let square = document.getElementById(id.split(" ")[0] + " " + i.toString());
+    // let square = document.getElementById(id.split(" ")[0] + " " + i.toString());
+    let square = container[row][i];
     if (square.style.backgroundColor === "") {
       square.style.backgroundColor = "rgb(161, 128, 224)";
     }
   }
 
   for (let i = 0; i < squares.length; i++) {
-    // Diagonally
-    let downRight = (moveRow + i).toString() + " " + (moveCol + i).toString();
-    let upRight = (moveRow - i).toString() + " " + (moveCol + i).toString();
-    let upLeft = (moveRow - i).toString() + " " + (moveCol - i).toString();
-    let downLeft = (moveRow + i).toString() + " " + (moveCol - i).toString();
+    // // Diagonally
+    // let downRight = (moveRow + i).toString() + " " + (moveCol + i).toString();
+    // let upRight = (moveRow - i).toString() + " " + (moveCol + i).toString();
+    // let upLeft = (moveRow - i).toString() + " " + (moveCol - i).toString();
+    // let downLeft = (moveRow + i).toString() + " " + (moveCol - i).toString();
 
-    let squareDownRight = document.getElementById(downRight);
-    let squareUpRight = document.getElementById(upRight);
-    let squareUpLeft = document.getElementById(upLeft);
-    let squareDownLeft = document.getElementById(downLeft);
+    // let squareDownRight = document.getElementById(downRight);
+    // let squareUpRight = document.getElementById(upRight);
+    // let squareUpLeft = document.getElementById(upLeft);
+    // let squareDownLeft = document.getElementById(downLeft);
+
+    let squareDownRight = container[row+i][col+i]
+    let squareUpRight = container[row-i][col+i]
+    let squareUpLeft = container[row-i][col-i]
+    let squareDownLeft = container[row+i][col-i]
 
     if (
       squareDownRight !== null &&
@@ -172,7 +189,7 @@ let sizeOptions = {
 
 function startGame(e) {
   e.preventDefault();
-  let formData = new FormData(e.target);
+  let formData = new FormData(container[row][col]);
   let {
     ["player-one"]: playerOne,
     ["player-two"]: playerTwo,
